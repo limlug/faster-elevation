@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')  --build-arg BUILD_VERSION=0.2.1 . --file Dockerfile --tag faster-elevation:latest 
+    - name: Build and push
+    - uses: docker/build-push-action@v6
+      with:
+          push: true
+          tags: limlug/faster-elevation:latest
+          build-args: BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ'), BUILD_VERSION=0.2.1
