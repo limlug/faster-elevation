@@ -13,9 +13,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Build and push
-    - uses: docker/build-push-action@v6
-      with:
-          push: true
-          tags: limlug/faster-elevation:latest
-          build-args: BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ'), BUILD_VERSION=0.2.1
+    
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+            context: .
+            push: true
+            tags: limlug/faster-elevation:latest
+            build-args: BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ'), BUILD_VERSION=0.2.1
