@@ -1,0 +1,35 @@
+services:
+  faster-elevation:
+    image: limlug/faster-elevation:latest
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DBDATABASE: elevationdata
+      DBHOST: db
+      DBPASS: CHANGEME
+      DBUSER: faster
+      DATADIR: /bin/data
+      REGENERATE: true
+      APIURL: /api/v1/lookup
+      CACHESIZE: 10000
+    volumes:
+      - ./data:/bin/data
+
+  db:
+    image: postgis/postgis
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: CHANGEME
+      POSTGRES_USER: faster
+      POSTGRES_DB: elevationdata
+    expose:
+      - 5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

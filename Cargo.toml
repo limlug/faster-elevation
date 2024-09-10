@@ -1,0 +1,21 @@
+[package]
+name = "faster-elevation"
+version = "0.2.1"
+edition = "2021"
+
+[dependencies]
+gdal = "0.17.0"
+geozero = { version = "0.13.0", features = ["with-postgis-postgres"] }
+geo = "0.28.0"
+walkdir = "2.5.0"
+clap = { version = "4.5.16", features = ["derive"] }
+exitcode = "1.1.2"
+http = "1.1.0"
+axum = "0.7.5"
+serde = { version = "1.0.209", features = ["derive"] }
+tokio = { version = "1.39.3",features = ["full"] }
+bb8 = "0.8.5"
+bb8-postgres = "0.8.1"
+tokio-postgres = "0.7.11"
+axum-macros = "0.4.1"
+moka = { version = "0.12.8", features = ["future"] }
