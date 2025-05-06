@@ -2,7 +2,8 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches: [ "main" ]
 
@@ -34,5 +35,5 @@ jobs:
       -
         name: 'Build Inventory Image'
         run: |
-              docker build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg BUILD_VERSION=0.3.0 . --tag ghcr.io/limlug/faster-elevation:latest
+              docker build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg BUILD_VERSION=${{ github.ref }} . --tag ghcr.io/limlug/faster-elevation:latest
               docker push ghcr.io/limlug/faster-elevation:latest
