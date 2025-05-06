@@ -1,17 +1,17 @@
 
 
-FROM rust:alpine3.20 AS build
-ARG APP_NAME=faster-elevation
+FROM rust:alpine3.21 AS build
+ARG APP_NAME=faster_elevation
 ARG APP_NAME
 WORKDIR /app
 COPY ./ ./
 RUN apk add --no-cache musl-dev
 RUN apk add --no-cache gdal gdal-dev
 ARG RUSTFLAGS='-C target-feature=-crt-static'
-RUN cargo build --bin faster-elevation --release
-RUN cp ./target/release/$APP_NAME /bin/faster-elevation
+RUN cargo build --bin faster_elevation --release
+RUN cp ./target/release/$APP_NAME /bin/faster_elevation
 
-FROM alpine:3.20 AS final
+FROM alpine:3.21 AS final
 LABEL authors="limlug"
 LABEL maintainer="limlug@limlug.de"
 ARG BUILD_DATE
@@ -36,6 +36,6 @@ RUN adduser \
     --uid "${UID}" \
     faster
 USER faster
-COPY --from=build /bin/faster-elevation /bin/
+COPY --from=build /bin/faster_elevation /bin/
 EXPOSE 3000
 CMD ["/bin/entrypoint.sh"]
