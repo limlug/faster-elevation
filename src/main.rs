@@ -1,3 +1,4 @@
+
 use clap::Parser;
 use exitcode;
 use std::env;
@@ -15,6 +16,12 @@ use faster_elevation::types::{Cli, CoordinateResult, AppState};
 use faster_elevation::repos::geo_repo::{PgGeoRepo};
 use faster_elevation::handlers::{post_lookup_coordinates, get_lookup_coordinates};
 use faster_elevation::utils::parse::{parse_data_create_database};
+
+// Avoid musl's default allocator due to lackluster performance
+// https://nickb.dev/blog/default-musl-allocator-considered-harmful-to-performance
+#[cfg(target_env = "musl")]
+#[global_allocator]
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 
 /// Main function to start the server and handle incoming requests.
